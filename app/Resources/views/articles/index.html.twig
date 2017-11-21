@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table>
+        {% for article in articles %}
+            <tr>
+
+                <td>  {{ article.title }} </td><td>  {{ article.content }} </td><td>  {{ article.dateWritten|date("m/d/Y") }} </td>
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+{% endblock %}
