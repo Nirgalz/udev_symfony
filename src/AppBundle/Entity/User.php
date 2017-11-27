@@ -22,11 +22,11 @@ class User
     private $id;
 
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="Article", mappedBy="User")
-//     */
-//    private $articles;
-//
+    /**
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="User")
+     */
+    private $articles;
+
 //    public function __construct()
 //    {
 //        $this->articles = new ArrayCollection();

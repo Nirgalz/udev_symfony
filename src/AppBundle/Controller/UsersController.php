@@ -4,6 +4,8 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,12 +18,31 @@ class UsersController extends Controller
 
 
     /**
-     * @Route("/users/add")
+     * @Route("/users/add", name="user_add")
      */
-    public function add(){
-        $form = $this->createForm('AppBundle\Form\UserType');
+    public function add(Request $request){
+
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $form->getData();
+
+
+             $em = $this->getDoctrine()->getManager();
+             $em->persist($user);
+             $em->flush();
+
+            return $this->redirectToRoute('users');
+        }
+
+
 
         return $this->render('users/add.html.twig', [
+            'user' =>$user,
             'form' => $form->createView()
         ]);
 
@@ -82,13 +103,28 @@ class UsersController extends Controller
 
         $user = $repository->findOneById($id);
 
-        if (is_null($user)){
-            throw $this->createNotFoundException('No user found');
+
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $form->getData();
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('users');
         }
 
-        return $this->render('users/edit.html.twig', [
-            "user" => $user,
 
+
+        return $this->render('users/edit.html.twig', [
+            'user' =>$user,
+            'form' => $form->createView()
         ]);
 
     }

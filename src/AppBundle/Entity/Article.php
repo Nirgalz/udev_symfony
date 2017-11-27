@@ -21,12 +21,12 @@ class Article
      */
     private $id;
 
-//
-//    /**
-//     * @ORM\ManyToOne(targetEntity="User", inversedBy="article")
-//     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-//     */
-//    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="article")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $user;
 
     /**
      * @var string

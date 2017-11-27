@@ -40,25 +40,32 @@ class ArticleController extends Controller
     /**
      * @Route("/articles/add", name="articles_add")
      */
-    public function createArticle(){
+    public function add(Request $request){
+
         $article = new Article();
-        $article->setContent("blalsdofkspoeslejfseijf");
-        $article->setDateWritten(new \DateTime());
-        $article->setTitle('un article');
+        $form = $this->createForm(ArticleType::class, $article);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $repository = $entityManager->getRepository('AppBundle:Article');
+        $form->handleRequest($request);
 
-        $user = $repository->findOneBy(['id' => 1]);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        $article->setUser($user);
+            $article = $form->getData();
 
-        $entityManager->persist($article);
-        $entityManager->flush();
 
-        return $this->render('add.html.twig', [
-            'message' => 'sauvegardé ?',
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('articles');
+        }
+
+
+
+        return $this->render('articles/add.html.twig', [
+            'article' =>$article,
+            'form' => $form->createView()
         ]);
+
     }
 
     /**

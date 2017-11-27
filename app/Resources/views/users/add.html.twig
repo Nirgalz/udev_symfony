@@ -2,7 +2,10 @@
 
 {% block body %}
 
-  {{ form_start(form, {'attr' : {'class': 'form'}}) }}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+
+    {{ form_start(form, {'attr' : {'class': 'form'}}) }}
     {{ form_widget(form) }}
     <input type="submit" value="Create">
     {{ form_end(form) }}
