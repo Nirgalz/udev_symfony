@@ -4,10 +4,37 @@
         <meta charset="UTF-8" />
         <title>{% block title %}udev{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">udev</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/users"><span class="glyphicon glyphicon-user"></span>Users</a></li>
+                    <li><a href="/users/add"><span class="glyphicon glyphicon-plus"></span></a></li>
+
+                    <li><a href="/articles"><span class="glyphicon glyphicon-file"></span>Articles</a></li>
+                    <li><a href="/articles/add"><span class="glyphicon glyphicon-plus"></span></a></li>
+
+                    <li><a href="#">ble</a></li>
+                </ul>
+            </div>
+        </nav>
+
+    </header>
+
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        <script
+                src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>
