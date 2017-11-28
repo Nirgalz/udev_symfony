@@ -1,0 +1,10 @@
+<div class="col-md-3">
+    <div class="sidebar-module well">
+        <h4>today's users</h4>
+        <ol class="list-unstyled">
+            {% for user in users %}
+                <li><a href="{{ path('user_view', {'id':user.id}) }}">{{ user.username }}</a></li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>

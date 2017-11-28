@@ -27,4 +27,44 @@ class DefaultController extends Controller
             'output' => $output,
         ]);
     }
+    //today users widget
+    public function lastUsersWidgetAction(Request $request)
+    {
+
+        $date = new \DateTime('now', (new \DateTimeZone('Europe/Paris')));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $entityManager->getRepository('AppBundle:User');
+        $queryBuilder = $repository->createQueryBuilder('u')
+            ->where('u.dateReg = :date')
+            ->setParameters(['date' => $date->format('Y-m-d')])
+            ->setMaxResults(10);
+        $query = $queryBuilder->getQuery();
+        $users = $query->getResult();
+
+        return $this->render('default/users.html.twig',[
+            'users'=>$users
+        ]);
+    }
+
+    //today articles widget
+    public function lastArticlesWidgetAction(Request $request)
+    {
+
+        $date = new \DateTime('now', (new \DateTimeZone('Europe/Paris')));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $entityManager->getRepository('AppBundle:Article');
+        $queryBuilder = $repository->createQueryBuilder('u')
+            ->where('u.dateWritten = :date')
+            ->setParameters(['date' => $date->format('Y-m-d')])
+            ->setMaxResults(10);
+        $query = $queryBuilder->getQuery();
+        $articles = $query->getResult();
+
+        return $this->render('default/articles.html.twig',[
+            'articles'=>$articles
+        ]);
+    }
+
 }

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ dump(articles) }}
 
     <table class="table">
         <thead>
@@ -16,23 +17,34 @@
 
         </thead>
 
-            <tr>
+        <tr>
 
-                <td>  {{ user.username }} </td>
-                <td>  {{ user.email }} </td>
-                <td>  {{ user.login }} </td>
-                <td>  {{ user.dateReg|date("m/d/Y") }} </td>
-                <td>  {{ user.password }} </td>
-                <td><a href="/users/view?id={{ user.id }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+            <td>  {{ user.username }} </td>
+            <td>  {{ user.email }} </td>
+            <td>  {{ user.login }} </td>
+            <td>  {{ user.dateReg|date("m/d/Y") }} </td>
+            <td>  {{ user.password }} </td>
+            <td><a href="/users/view?id={{ user.id }}"><span class="glyphicon glyphicon-eye-open"></span></a>
 
-                    <a href="/users/edit?id={{ user.id }}"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a href="/users/delete?id={{ user.id }}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <a href="/users/edit?id={{ user.id }}"><span class="glyphicon glyphicon-edit"></span></a>
+                <a href="/users/delete?id={{ user.id }}"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-            </tr>
+        </tr>
 
 
     </table>
+    {{ render(controller('AppBundle:Users:otherUserWidget', {'id':user.id})) }}
 
+    {#<table class="table">#}
+        {#{% for article in articles.association %}#}
+            {#<tr>#}
+                {#<td>{{ article.title }}</td>#}
 
+                {#<td><a href="{{ path('article_view', {'id' : article.id}) }}"><span#}
+                                {#class="glyphicon glyphicon-eye-open"></span></a>#}
+                {#</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+    {#</table>#}
 
 {% endblock %}

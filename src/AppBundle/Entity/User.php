@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -27,10 +28,18 @@ class User
      */
     private $articles;
 
-//    public function __construct()
-//    {
-//        $this->articles = new ArrayCollection();
-//    }
+    /**
+     * @return mixed
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
 
     /**

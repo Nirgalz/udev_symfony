@@ -33,7 +33,7 @@ class CreateArticleCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $entityManager = $this->getContainer()->get('doctrine')->getManager();
-
+        $repository = $entityManager->getRepository('AppBundle:User');
         $faker = Factory::create();
 
         $date = new \DateTime();
@@ -47,12 +47,26 @@ class CreateArticleCommand extends ContainerAwareCommand
 
             for ($i = 0; $i < $num; $i++) {
 
+            //randomy selects a user for the article
+                $count = $repository->createQueryBuilder('u')
+                    ->select('COUNT(u.id)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+
+                $randomUser = $repository->createQueryBuilder('u')
+                    ->setFirstResult(rand(0, $count - 1))
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getSingleResult();
+
+
+                //creates article
                 $article = new Article();
 
-                $article->setTitle($faker->firstName);
-                $article->setContent($faker->sentence);
+                $article->setTitle($faker->sentence(5));
+                $article->setContent($faker->sentence(50));
                 $article->setDateWritten($date);
-                $article->setUser(1);
+                $article->setUser($randomUser);
 
                 $entityManager->persist($article);
                 $entityManager->flush();
